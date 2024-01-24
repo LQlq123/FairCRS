@@ -10,7 +10,7 @@ We propose Variational Reasoning over Incomplete KGs Conversational Recommender.
 
 #Dataset
 我们在
-https://drive.google.com/file/d/1a7KutG_JYZnsq0nGcnjY-Ppd4BjzESGv/view?usp=drive_link
+
 
 #Run
 ```bash
