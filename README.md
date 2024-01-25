@@ -26,5 +26,3 @@ python run_crslab.py --config config/crs/kbrd/tgredial.yaml --restore_system
 ```
 Other specific commands can be found in the file "run_crslab.py".
 
-The code is based on CRSLab.  Thanks a lot for [CRSLab](https://github.com/RUCAIBox/CRSLab/tree/main)!
-
