@@ -18,8 +18,6 @@ class Config:
             config_file (str): path to the config file, which should be in ``yaml`` format.
                 You can use default config provided in the `Github repo`_, or write it by yourself.
             debug (bool, optional): whether to enable debug function during running. Defaults to False.
-译文：配置文件(str):配置文件的路径，应该是' ' yaml ' '格式。你可以使用' Github回购'中提供的默认配置，或者自己编写。
-Debug (bool，可选):运行时是否开启调试功能。默认为False
         .. _Github repo:
             https://github.com/RUCAIBox/CRSLab
 
