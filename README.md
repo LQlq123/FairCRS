@@ -5,6 +5,7 @@ We propose a framework for mitigating the issues of user unfairness in conversat
 
 ![image](https://github.com/LQlq123/FairCRS/blob/main/overallframework.png)
 # Environment
+* Pip install CRSLab 
 * Python == 3.10.9
 * Pytorch == 1.13.1
 
