@@ -10,7 +10,9 @@ We propose a framework for mitigating the issues of user unfairness in conversat
 
 # Dataset
 We collected and preprocessed 2 commonly used human annotated datasets (i.e., TG-ReDial and ReDial) and divided each dataset into two user groups (i.e., active and inactive) according to the number of items mentioned by the users in the dialogue, as shown below.
+
 ![image](https://github.com/LQlq123/FairCRS/blob/main/dataset.png)
+
 We have uploaded the dataset to [Google Drive](https://drive.google.com/file/d/1a7KutG_JYZnsq0nGcnjY-Ppd4BjzESGv/view?usp=sharing). The downloaded dataset folder should be placed in the data folder.
 
 # Run
