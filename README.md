@@ -1,8 +1,8 @@
 # FairCRS: Towards User-oriented Fairness in Conversational Recommendation Systems
 Please run the code via:
 
-#Overview
-We propose Variational Reasoning over Incomplete KGs Conversational Recommender. Our key idea is to incorporate the large dialogue corpus naturally accompanied with CRSs to enhance the incomplete knowledge graphs; and adopt the variational Bayesian method to perform dynamic knowledge reasoning conditioned on the dialogue context. Specifically, we denote the dialogue-specific subgraphs of KGs as latent variables with categorical priors for adaptive knowledge graphs refactor. We propose a variational Bayesian method to approximate posterior distributions over dialogue-specific subgraphs, which not only leverages the dialogue corpus for restructuring missing entity relations but also dynamically selects knowledge based on the dialogue context.
+# Overview
+We propose a framework for mitigating the issues of user unfairness in conversational recommendation systems, i.e., FairCRS. The key idea of the framework is the difference in the performance of CRS models on different user groups due to the modelling bias that we found in the models on different user groups. Specifically, we design a mechanism that enhances the user representation ability of CRS models on disadvantaged user groups - the user-embedded reconstruction mechanism; and we propose a strategy that optimises the difference in recommendation quality between both user groups - the user-oriented fairness strategy. The FairCRS framework not only mitigates user unfairness in existing CRS models but also improves the overall recommendation performance.
 
 ![image](https://github.com/LQlq123/FairCRS/blob/main/overallframework.png)
 # Environment
