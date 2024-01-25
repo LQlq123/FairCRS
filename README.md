@@ -13,7 +13,7 @@ We collected and preprocessed 2 commonly used human annotated datasets (i.e., TG
 
 ![image](https://github.com/LQlq123/FairCRS/blob/main/dataset.png)
 
-We have uploaded the dataset to [Google Drive](https://drive.google.com/file/d/1a7KutG_JYZnsq0nGcnjY-Ppd4BjzESGv/view?usp=sharing). The downloaded dataset folder should be placed in the data folder.
+We have uploaded the dataset to [Google Drive](https://drive.google.com/file/d/1a7KutG_JYZnsq0nGcnjY-Ppd4BjzESGv/view?usp=sharing). The downloaded dataset folder should be placed in the "data" folder ((needs to be created under the FairCRS path).).
 
 # Run
 We have applied our FairCRS framework to the CRS baseline, and you can run it directly using the command below:
