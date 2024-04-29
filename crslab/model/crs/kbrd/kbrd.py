@@ -97,17 +97,18 @@ class KBRDModel(BaseModel):
         self.user_group = {}
 
         #TG-ReDial
-        with open("data/dataset/tgredial/pkuseg/group(all)/active5.json") as f:
+        with open("data/dataset/tgredial/pkuseg/group/active5.json") as f:
             self.user_group["priority"] = json.load(f)
-        with open("data/dataset/tgredial/pkuseg/group(all)/inactive5.json") as f:
+        with open("data/dataset/tgredial/pkuseg/group/inactive5.json") as f:
             self.user_group["unpriority"] = json.load(f)
 
         #ReDial
-        # with open("data/dataset/redial/nltk/group(10342)/active5.json") as f:
+        # with open("data/dataset/redial/nltk/group/active5.json") as f:
         #     self.user_group["priority"] = json.load(f)
-        # with open("data/dataset/redial/nltk/group(10342)/inactive5.json") as f:
+        # with open("data/dataset/redial/nltk/group/inactive5.json") as f:
         #     self.user_group["unpriority"] = json.load(f)
-            
+        
+        
         self.uid_group = {uid: group for group, ids in self.user_group.items() for uid in ids}
 
         super(KBRDModel, self).__init__(opt, device)
