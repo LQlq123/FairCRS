@@ -267,9 +267,22 @@ class KGSFModel(BaseModel):
         word_attn_rep = self.word_self_attn(word_representations, word_padding_mask)
 
         user_rep = self.gate_layer(entity_attn_rep, word_attn_rep)
+        
         epsilon = 0.02
-        user_emb_2 = user_rep + epsilon * user_rep.mean(dim=0)
-        user_rep = user_emb_2
+        epsilon_2 = 1  
+        user_emb_1 = user_rep.clone()
+        with torch.no_grad():
+            weights = torch.zeros(user_rep.shape[0]).to(user_rep.device)
+            cos = torch.matmul(user_rep, user_rep.t()) / torch.norm(user_rep) / torch.norm(user_rep)
+            weights = weights + epsilon_2 * cos
+        user_emb_2 = user_emb_1 + epsilon * user_emb_1.mean(dim=0) + torch.matmul(weights, user_emb_1).mean(dim=0)
+        for i in range(len(user_emb_2)):
+            group = self.uid_group.get(user_id, "unpriority")
+            if group == "unpriority":
+                user_rep[i] = user_emb_2[i]
+            else:
+                pass
+        
         rec_scores = F.linear(user_rep, entity_graph_representations, self.rec_bias.bias)  # (bs, #entity)
         self.rec_sc = rec_scores
         rec_loss = self.rec_loss(rec_scores, movie)
