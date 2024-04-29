@@ -10,7 +10,7 @@ References:
 """
 
 import os
-
+import json
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -105,6 +105,20 @@ class KGSFModel(BaseModel):
         self.reduction = opt['reduction']
         self.n_positions = opt['n_positions']
         self.response_truncate = opt.get('response_truncate', 20)
+        self.user_group = {}
+
+        #TG-ReDial
+        with open("data/dataset/tgredial/pkuseg/group/active5.json") as f:
+            self.user_group["priority"] = json.load(f)
+        with open("data/dataset/tgredial/pkuseg/group/inactive5.json") as f:
+            self.user_group["unpriority"] = json.load(f)
+
+        #ReDial
+        # with open("data/dataset/redial/nltk/group/active5.json") as f:
+        #     self.user_group["priority"] = json.load(f)
+        # with open("data/dataset/redial/nltk/group/inactive5.json") as f:
+        #     self.user_group["unpriority"] = json.load(f)
+        
         # copy mask
         dataset = opt['dataset']
         dpath = os.path.join(MODEL_PATH, "kgsf", dataset)
