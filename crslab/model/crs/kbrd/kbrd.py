@@ -9,7 +9,7 @@ References:
 
 """
 import math
-
+import json
 import torch
 import torch.nn.functional as F
 from loguru import logger
@@ -94,7 +94,22 @@ class KBRDModel(BaseModel):
         self.n_positions = opt.get('n_positions', 1024)
         self.longest_label = opt.get('longest_label', 1)
         self.user_proj_dim = opt.get('user_proj_dim', 512)
-        # self.uid_group = {uid: group for group, ids in self.user_group.items() for uid in ids}
+        self.user_group = {}
+
+        #TG-ReDial
+        # with open("data/dataset/tgredial/pkuseg/group(all)/active5.json") as f:
+        #     self.user_group["priority"] = json.load(f)
+        # with open("data/dataset/tgredial/pkuseg/group(all)/inactive5.json") as f:
+        #     self.user_group["unpriority"] = json.load(f)
+
+        #ReDial
+        with open("data/dataset/redial/nltk/group(10342)/active5.json") as f:
+            self.user_group["priority"] = json.load(f)
+        with open("data/dataset/redial/nltk/group(10342)/inactive5.json") as f:
+            self.user_group["unpriority"] = json.load(f)
+            
+        self.uid_group = {uid: group for group, ids in self.user_group.items() for uid in ids}
+
         super(KBRDModel, self).__init__(opt, device)
 
     def build_model(self, *args, **kwargs):
@@ -179,8 +194,21 @@ class KBRDModel(BaseModel):
         kg_embedding = self.kg_encoder(None, self.edge_idx, self.edge_type)
         user_embedding = self.encode_user(context_entities, kg_embedding)
         epsilon = 0.02
-        user_emb_2 = user_embedding + epsilon * user_embedding.mean(dim=0)
-        user_embedding = user_emb_2
+        epsilon_2 = 1
+        user_id = batch["user_ids"]
+        user_emb_1 = user_embedding.clone()
+        with torch.no_grad():
+            weights = torch.zeros(user_embedding.shape[0]).to(user_embedding.device)
+            cos = torch.matmul(user_embedding, user_embedding.t()) / torch.norm(user_embedding) / torch.norm(user_embedding)
+            weights = weights + epsilon_2 * cos
+        user_emb_2 = user_emb_1 + epsilon * user_emb_1.mean(dim=0) + torch.matmul(weights, user_emb_1).mean(dim=0)
+        user_id = str(user_id)
+        for i in range(len(user_emb_2)):
+            group = self.uid_group.get(user_id, "unpriority")
+            if group == "unpriority":
+                user_embedding[i] = user_emb_2[i]
+            else:
+                pass
         scores = F.linear(user_embedding, kg_embedding, self.rec_bias.bias)
         loss = self.rec_loss(scores, item)
         return loss, scores
